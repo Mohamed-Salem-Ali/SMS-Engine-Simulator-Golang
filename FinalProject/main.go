@@ -1,25 +1,20 @@
 package main
 
 import (
-	"log"
-	"net/http"
+	"database/sql"
+	"fmt"
 
-	"github.com/gorilla/mux"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-func initializeRouter() {
-	r := mux.NewRouter()
-
-	r.HandleFunc("/users", GetUsers).Methods("GET")
-	r.HandleFunc("/users/{id}", GetUser).Methods("GET")
-	r.HandleFunc("/users", CreateUser).Methods("POST")
-	r.HandleFunc("/users/{id}", UpdateUser).Methods("PUT")
-	r.HandleFunc("/users/{id}", DeleteUser).Methods("DELETE")
-
-	log.Fatal(http.ListenAndServe(":9000", r))
-}
-
 func main() {
-	InitialMigration()
-	initializeRouter()
+	fmt.Println("Create Query salem XD")
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/godb")
+
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+	fmt.Println("Successfully Connected to the Database")
+
 }
